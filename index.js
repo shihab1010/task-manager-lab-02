@@ -1,5 +1,5 @@
 const express = require("express");
-const taskRouter = require("./routes/tasks");
+const taskRouter = require("./src/routes/tasks");
 
 const app = express();
 
@@ -50,7 +50,7 @@ app.use(express.json());
 // Mount router
 app.use("/tasks", taskRouter);
 
-// Health check route
+// Health check
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
