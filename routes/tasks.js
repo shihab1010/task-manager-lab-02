@@ -11,10 +11,26 @@ router.get("/", (req, res) => {
   });
 });
 
+// GET /tasks/:id - Retrieve a task by ID
+router.get("/:id", (req, res) => {
+  const tasks = req.app.locals.tasks;
+  const id = parseInt(req.params.id);
+
+  const task = tasks.find((t) => t.id === id);
+
+  if (!task) {
+    return res.status(404).json({
+      error: "Task not found",
+    });
+  }
+
+  res.status(200).json(task);
+});
+
 // POST /tasks - Create a new task
 router.post("/", (req, res) => {
   try {
-    const { title } = req.body;
+    const { title, priority } = req.body;
 
     // Input validation
     if (!title || typeof title !== "string" || title.trim().length === 0) {
@@ -25,9 +41,11 @@ router.post("/", (req, res) => {
     }
 
     const newTask = {
-      id: Date.now(), // Temporary ID
+      id: Date.now(),
       title: title.trim(),
       completed: false,
+      priority: priority || "low",
+      createdAt: new Date(),
     };
 
     const tasks = req.app.locals.tasks;
