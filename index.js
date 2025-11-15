@@ -3,14 +3,49 @@ const taskRouter = require("./routes/tasks");
 
 const app = express();
 
-// In-memory storage 
-const tasks = [{ id: 1, title: "Sample Task", completed: false }];
+// In-memory storage with 5 tasks
+const tasks = [
+  {
+    id: 1,
+    title: "Learn Node.js",
+    completed: false,
+    priority: "high",
+    createdAt: new Date(),
+  },
+  {
+    id: 2,
+    title: "Practice Express routing",
+    completed: false,
+    priority: "medium",
+    createdAt: new Date(),
+  },
+  {
+    id: 3,
+    title: "Build REST API project",
+    completed: false,
+    priority: "high",
+    createdAt: new Date(),
+  },
+  {
+    id: 4,
+    title: "Study for LAB test",
+    completed: true,
+    priority: "low",
+    createdAt: new Date(),
+  },
+  {
+    id: 5,
+    title: "Read JavaScript documentation",
+    completed: false,
+    priority: "medium",
+    createdAt: new Date(),
+  },
+];
 
-// Share array with routes
 app.locals.tasks = tasks;
 
 // Middleware
-app.use(express.json()); // Allows JSON bodies
+app.use(express.json());
 
 // Mount router
 app.use("/tasks", taskRouter);
